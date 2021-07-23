@@ -2,6 +2,7 @@
 # Author: Diego Lopez
 # last updated: July 22, 2021
 # Notes: THis file calls discord's api to connect and send messages to the server with connection to googles api
+
 """
 TO IMPLEMENT:
 - create a function to loop every 24 hours that updates the list to the correct sheet eg rooms are now reflecting the next day
@@ -10,6 +11,7 @@ TO IMPLEMENT:
 - create a function that loops every 5 minutes (but different starting time than deploy function) to update check times
      -if check time is 30,15,5 minutes later and also past the earliest check time, ping discord that the checks is needed
 """
+
 import os
 import discord
 from discord.ext import tasks
@@ -41,13 +43,9 @@ async def on_ready():
     """
     daily_deploy_update.start()
 
-@client.event
-async def doobee():
-    return [1,2,3,4,5]
-
 @tasks.loop(minutes=1)
 async def daily_deploy_update():
-    x = deploy_update()
+    x = deploy_update_full()
     channel = client.get_channel(CHANNEL_ID)
     await channel.send(f"The classes for today, {date.today()} are as follows:\n")
     # logic to print just the rooms? 
