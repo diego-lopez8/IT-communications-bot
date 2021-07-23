@@ -1,4 +1,15 @@
-# bot.py
+# main.py
+# Author: Diego Lopez
+# last updated: July 22, 2021
+# Notes: THis file calls discord's api to connect and send messages to the server with connection to googles api
+"""
+TO IMPLEMENT:
+- create a function to loop every 24 hours that updates the list to the correct sheet eg rooms are now reflecting the next day
+- create a function that loops every 5 minutes to update deploy times
+     -if demployment time is 30,15,5 minutes later, ping discord that the deployment is needed
+- create a function that loops every 5 minutes (but different starting time than deploy function) to update check times
+     -if check time is 30,15,5 minutes later and also past the earliest check time, ping discord that the checks is needed
+"""
 import os
 import discord
 from discord.ext import tasks
