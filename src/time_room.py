@@ -34,35 +34,56 @@ class check_room (room):
         return f"{super().__repr__()}Checked: {self.is_checked}\nChecked by: {self.checked_by}\n"
 
 class deploy_time (object):
-    def __init__(self, date, time):
+    def __init__(self, time):
         # date: A Date object containing the date which this deploy time is active
         # time: A string containing the last possible time that a mic must be deployed to the room(s) in the attr
         # rooms: Contains a list of room objects that fall under this deploy time
-        self.date  = date
         self.time  = time
         self.rooms = []
+
     def __repr__(self):
-        header = f"{self.date}\n{self.time}\n"
-        rep = ""
+        # returns a string with the time of the deployment followed by the room names & if theyre deployed, comments, etc. 
+        header          = f"{self.time}\n"
+        full_return_str = header
         for elem in self.rooms:
-            rep += repr(elem)
-        return header + rep
+            full_return_str += repr(elem)
+        return full_return_str
+    
+    def deploy_room_call(self):
+        # returns a string containing the room names associated with the time (excludes attributes of room)
+        header          = self.time + '\n'
+        full_return_str = header
+        for room in self.rooms:
+            full_return_str +=  room.room_name + '\n'
+        return full_return_str
+
 
 class check_time (object):
-    def __init__(self, date, time_start, time_end):
+    def __init__(self, time_start, time_end):
         # date: A Date object containing the date which this deploy time is active
         # time_start: A string containing the earliest that a room can have batteries checked
         # time_end: A string containing the latest time that a room can have batteries checked
         # rooms: Contains a list of room objects that fall under this check time
-        self.date        = date
         self.time_start  = time_start
         self.time_end    = time_end
         self.rooms       = []
+
     def __repr__(self):
-        header = f"{self.date}\n{self.time_start}\n{self.time_end}\n"
-        rep = ""
+        header          = f"{self.time_start}\n{self.time_end}\n"
+        full_return_str = header
         for elem in self.rooms:
-            rep += repr(elem)
-        return header + rep
+            full_return_str += repr(elem)
+        return full_return_str
 
+class Maintenance_Day:
+    def __init__(self, day):
+        self.day          = day
+        self.deploy_times = []
+        self.check_times  = []
 
+    def __repr__(self): 
+        header          = f"The schedule for {self.day} is as follows:\n"
+        full_return_str = header
+        for time in self.deploy_times:
+            full_return_str += time.deploy_room_call()
+        return full_return_str
